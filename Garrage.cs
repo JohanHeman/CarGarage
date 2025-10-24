@@ -55,6 +55,19 @@ namespace CarGarage
                 Console.WriteLine("What brand is the motorcycle? ");
                 motorcycle.Brand = Console.ReadLine();
             }
+            else if(vehicle is Buss)
+            {
+                Console.WriteLine("How many seats is it on the buss? ");
+                bool Succes = int.TryParse(Console.ReadLine(), out int seats);
+
+                if (Succes)
+                {
+                    ((Buss)vehicle).Passangers = seats;
+                } else
+                {
+                    Console.WriteLine("Please enter a number of passangers: ");
+                }
+            }
 
             
 
