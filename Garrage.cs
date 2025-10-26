@@ -17,8 +17,6 @@ namespace CarGarage
         public Dictionary<double, double> EmptySpots { get; set; }
 
 
-
-
         public Garrage(int sizeX, int sizeY)
         {
             SizeX = sizeX;

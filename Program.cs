@@ -10,8 +10,12 @@ namespace CarGarage
             Road road = new Road(3, 10);
             Garrage garrage = new Garrage(3, 5);
 
+            CreateVehicle.GenereateVehicles(road);
 
-
+            foreach(var car in road.RoadVehicles)
+            {
+                Console.WriteLine(car);
+            }
 
             garrage.DrawGarrage(garrage);
             road.DrawRoad(road);
