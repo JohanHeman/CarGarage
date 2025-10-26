@@ -17,5 +17,16 @@ namespace CarGarage
             isElectric = isElectric;
         }
 
+
+        public override double Size()
+        {
+            return 1;
+
+        }
+
     }
+
+
+
+
 }

@@ -18,5 +18,10 @@ namespace CarGarage
 
         }
 
+        public override double Size()
+        {
+            return 2;
+        }
+
     }
 }

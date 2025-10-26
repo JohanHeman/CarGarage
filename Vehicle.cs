@@ -18,7 +18,16 @@ namespace CarGarage
             Collor = collor;
         }
 
+        public virtual double Size()
+        {
+            return 0;
+
+        }
 
 
     }
+
+
+
+
 }
