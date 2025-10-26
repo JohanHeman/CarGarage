@@ -13,16 +13,16 @@ namespace CarGarage
 
         public int SizeX { get; set; }
         public int SizeY { get; set; }
-        public Dictionary<Double, List<Vehicle>> ParkedVehicles { get; set; }
-        public List<Vehicle> ParkedVheicles { get; set; }
-
+        public Dictionary<double, Vehicle> ParkedVehicles { get; set; }
+        public Dictionary<int, double> EmptySpots { get; set; }
+        
         
 
         public Garrage( int sizeX, int sizeY)
         {
             SizeX = sizeX;
             SizeY = sizeY;
-            ParkedVehicles = new Dictionary<double, List<Vehicle>>();
+            ParkedVehicles = new Dictionary<double, Vehicle>();
         }
 
         public void CheckIn(Vehicle vehicle)
@@ -92,35 +92,14 @@ namespace CarGarage
 
         public void PlaceVehicle(Vehicle vehicle, Garrage garrage)
         {
-            double sizeOfParking = 0;
-
-            double avalibleSpots = (garrage.SizeX * garrage.SizeY) - garrage.ParkedVehicles.Count(); // should calculate avalible spots
-
             
 
-            if(vehicle is Car)
-            {
-                sizeOfParking = 1;
-                garrage.ParkedVehicles.Add(1, vehicle); // hitta ett sätt att skapa nyckel på ett bra sätt 
-               
-                
-            }
-
-            else if(vehicle is Motorcycle)
-            {
-                sizeOfParking = 0.5;
-                garrage.ParkedVehicles.Add(0.5, vehicle);
-            }
-
-            else if( vehicle is Buss)
-            {
-                sizeOfParking = 2;
-
-                garrage.ParkedVehicles.Add(2, vehicle);
-            }
+                    
+        }
 
 
-
+        public void ParkCar(Vehicle car, Garrage garrage)
+        {
 
         }
 
