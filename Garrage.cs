@@ -26,10 +26,10 @@ namespace CarGarage
             ParkedVehicles = new Dictionary<double, Vehicle>();
         }
 
-        public void CheckIn(Vehicle vehicle)
+        public void CheckIn(Vehicle vehicle, Garrage gar)
         {
 
-            // input collor and unique property 
+            
 
             Console.WriteLine("What collor is the vehicle? ");
             vehicle.Collor = Console.ReadLine();
@@ -53,6 +53,8 @@ namespace CarGarage
                         Console.WriteLine("Wrong input please enter a valid answer");
                         break;
                 }
+
+                PlaceVehicle((Car)vehicle, gar); // detta la jag till i slutet
             }
             else if (vehicle is Motorcycle)
             {
@@ -79,14 +81,15 @@ namespace CarGarage
         public void DrawGarrage(Garrage garrage)
         {
 
-
-            int[,] draw = new int[garrage.SizeX, garrage.SizeY];
-
             for (int x = 0; x < garrage.SizeX; x++)
             {
                 for (int y = 0; y < garrage.SizeY; y++)
                 {
-                    Console.Write(". \t");
+
+                    if (!garrage.ParkedVehicles.ContainsKey(y))
+                    {
+                        Console.Write(". ");
+                    }
                     
                 }
                 Console.WriteLine();
@@ -108,8 +111,15 @@ namespace CarGarage
 
         public void ParkCar(Car car, Garrage garrage)
         {
-
-
+            
+            for (int spot = 1; spot <= 15; spot++)
+            {
+                if (!garrage.ParkedVehicles.ContainsKey(spot))
+                {
+                    garrage.ParkedVehicles.Add(spot, car);
+                    return; // stop once parked
+                }
+            }
 
         }
     }

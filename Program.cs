@@ -11,13 +11,14 @@ namespace CarGarage
             Garrage garrage = new Garrage(3, 5);
 
 
+
+
             garrage.DrawGarrage(garrage);
             road.DrawRoad(road);
 
-            // jag är på dictionarry grejen 
-            // frsök förstå hur du ska lägga till keys som deras parkeringsplats till det vehicle som parkerar
-
-
+            // prio nu är att fixa funktioner för att skapa random fordon 
+            // placera dom på vägen 
+            // och köra in fordonen i garaget och placera dom med checkin och place vehicle
         }
     }
 }

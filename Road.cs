@@ -23,7 +23,6 @@ namespace CarGarage
             RoadVehicles.Enqueue(car);
         }
 
-
         public void DrawRoad(Road road)
         {
             int[,] draw = new int[road.SizeX, road.SizeY];
