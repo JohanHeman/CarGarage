@@ -11,10 +11,12 @@ namespace CarGarage
 
         public bool IsElectric { get; set; }
 
+        
 
         public Car(string plate, string collor, bool isElectric) : base(plate, collor)
         {
             isElectric = isElectric;
+            Name = "C";
         }
 
 

@@ -12,10 +12,13 @@ namespace CarGarage
         public string Plate { get; set; }
         public string Collor { get; set; }
 
+        public string Name { get; set; }
+
         public Vehicle(string plate, string collor)
         {
             Plate = plate;
             Collor = collor;
+            
         }
 
         public virtual double Size()

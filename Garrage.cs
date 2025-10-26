@@ -52,7 +52,7 @@ namespace CarGarage
                         break;
                 }
 
-                PlaceVehicle((Car)vehicle, gar); // detta la jag till i slutet
+            
             }
             else if (vehicle is Motorcycle)
             {
@@ -83,10 +83,13 @@ namespace CarGarage
             {
                 for (int y = 0; y < garrage.SizeY; y++)
                 {
-
+                    
                     if (!garrage.ParkedVehicles.ContainsKey(y))
                     {
                         Console.Write(". ");
+                    } else
+                    {
+                        Console.Write(garrage.ParkedVehicles[y].Name);
                     }
                     
                 }

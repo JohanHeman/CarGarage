@@ -13,9 +13,11 @@ namespace CarGarage
 
         public bool IsParked { get; set; } = false;
 
+
         public Motorcycle(string plate, string collor, string brand) : base(plate, collor)
         {
             Brand = brand;
+            Name = "M";
         }
 
 

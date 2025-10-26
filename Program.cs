@@ -12,17 +12,12 @@ namespace CarGarage
 
             CreateVehicle.GenereateVehicles(road);
 
-            foreach(var car in road.RoadVehicles)
-            {
-                Console.WriteLine(car);
-            }
+            
 
             garrage.DrawGarrage(garrage);
             road.DrawRoad(road);
 
-            // prio nu är att fixa funktioner för att skapa random fordon 
-            // placera dom på vägen 
-            // och köra in fordonen i garaget och placera dom med checkin och place vehicle
+            // placera vehicles
         }
     }
 }
