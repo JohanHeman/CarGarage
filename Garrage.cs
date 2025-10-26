@@ -14,11 +14,12 @@ namespace CarGarage
         public int SizeX { get; set; }
         public int SizeY { get; set; }
         public Dictionary<double, Vehicle> ParkedVehicles { get; set; }
-        public Dictionary<int, double> EmptySpots { get; set; }
-        
-        
+        public Dictionary<double, double> EmptySpots { get; set; }
 
-        public Garrage( int sizeX, int sizeY)
+
+
+
+        public Garrage(int sizeX, int sizeY)
         {
             SizeX = sizeX;
             SizeY = sizeY;
@@ -33,7 +34,7 @@ namespace CarGarage
             Console.WriteLine("What collor is the vehicle? ");
             vehicle.Collor = Console.ReadLine();
             Console.Clear();
-            if(vehicle is Car)
+            if (vehicle is Car)
             {
                 Console.WriteLine("Is the car an electric car? \n" +
                     "1: Electric\n" +
@@ -53,12 +54,12 @@ namespace CarGarage
                         break;
                 }
             }
-            else if(vehicle is Motorcycle)
+            else if (vehicle is Motorcycle)
             {
                 Console.WriteLine("What brand is the motorcycle? ");
                 ((Motorcycle)vehicle).Brand = Console.ReadLine();
             }
-            else if(vehicle is Buss)
+            else if (vehicle is Buss)
             {
                 Console.WriteLine("How many seats is it on the buss? ");
                 bool Succes = int.TryParse(Console.ReadLine(), out int seats);
@@ -66,7 +67,8 @@ namespace CarGarage
                 if (Succes)
                 {
                     ((Buss)vehicle).Passangers = seats;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("Please enter a number of passangers: ");
                 }
@@ -76,12 +78,15 @@ namespace CarGarage
 
         public void DrawGarrage(Garrage garrage)
         {
+
+
             int[,] draw = new int[garrage.SizeX, garrage.SizeY];
 
-            for(int x = 0; x < garrage.SizeX; x++)
+            for (int x = 0; x < garrage.SizeX; x++)
             {
-                for(int y = 0; y < garrage.SizeY; y++)
+                for (int y = 0; y < garrage.SizeY; y++)
                 {
+                    Console.Write(". \t");
                     
                 }
                 Console.WriteLine();
@@ -92,24 +97,20 @@ namespace CarGarage
 
         public void PlaceVehicle(Vehicle vehicle, Garrage garrage)
         {
-            
+            if (vehicle is Car)
+            {
+                garrage.ParkCar((Car)vehicle, garrage);
+            }
 
-                    
+
         }
 
 
-        public void ParkCar(Vehicle car, Garrage garrage)
+        public void ParkCar(Car car, Garrage garrage)
         {
 
+
+
         }
-
-    
-
-
-
-
-
-
-
     }
 }

@@ -12,6 +12,7 @@ namespace CarGarage
 
 
             garrage.DrawGarrage(garrage);
+            road.DrawRoad(road);
 
             // jag är på dictionarry grejen 
             // frsök förstå hur du ska lägga till keys som deras parkeringsplats till det vehicle som parkerar
