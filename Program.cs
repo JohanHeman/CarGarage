@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CarGarage
 {
@@ -12,26 +13,81 @@ namespace CarGarage
 
             CreateVehicle.GenereateVehicles(road);
 
-            Vehicle veh = road.RoadVehicles.Dequeue();
-            garrage.CheckIn(veh, garrage);
-            veh = road.RoadVehicles.Dequeue();
-            garrage.CheckIn(veh, garrage);
+            double spotsAvalible = garrage.SizeX * garrage.SizeY;
 
-            
 
-            garrage.DrawGarrage(garrage);
-            road.DrawRoad(road);
-
-            Console.WriteLine("Bus parked at:");
-            foreach (var kvp in garrage.ParkedVehicles)
+            while(spotsAvalible > 0)
             {
-                if (kvp.Value is Bus)
-                    Console.WriteLine($" -> Spot {kvp.Key}");
+
+                garrage.DrawGarrage(garrage);
+                road.DrawRoad(road);
+
+                Vehicle veh = road.RoadVehicles.Dequeue();
+                garrage.CheckIn(veh, garrage);
+                Console.Clear();
+                Console.WriteLine("The vehicle is driving in the garrage");
+                Thread.Sleep(1000);
             }
 
 
 
-            // Prio är att fixa buss
+
+
+            //static void SpotCheck(Garrage gar, Vehicle veh)
+            //{
+            //    double spotsAvalible = gar.ParkedVehicles.Count;
+
+            //    if(veh is Car)
+            //    {
+            //        spotsAvalible--;
+            //    } 
+            //    else if(veh is Bus)
+            //    {
+            //        spotsAvalible -= ((Bus)veh).Size();
+            //    }
+            //    else
+            //    {
+            //        spotsAvalible -= ((Motorcycle)veh).Size();
+            //    }
+
+            //}
+
+
+            //garrage.DrawGarrage(garrage);
+            //road.DrawRoad(road);
+
+            //Vehicle veh = road.RoadVehicles.Dequeue();
+            //garrage.CheckIn(veh, garrage);
+            //Console.Clear();
+            //Console.WriteLine("The vehicle is driving in the garrage");
+            //Thread.Sleep(1000);
+            //garrage.DrawGarrage(garrage);
+            //road.DrawRoad(road);
+
+            //veh = road.RoadVehicles.Dequeue();
+            //garrage.CheckIn(veh, garrage);
+            //Console.WriteLine("The vehicle is driving in the garrage");
+            //Thread.Sleep(1000);
+            //Console.Clear();
+            //garrage.DrawGarrage(garrage);
+            //road.DrawRoad(road);
+            
+
+            //veh = road.RoadVehicles.Dequeue();
+            //garrage.CheckIn(veh, garrage);
+            //Console.WriteLine("The vehicle is driving in the garrage");
+            //Thread.Sleep(1000);
+            //Console.Clear();
+            //garrage.DrawGarrage(garrage);
+            //road.DrawRoad(road);
+
+            //veh = road.RoadVehicles.Dequeue();
+            //garrage.CheckIn(veh, garrage);
+            //Console.WriteLine("The vehicle is driving in the garrage");
+            //Thread.Sleep(1000);
+            //Console.Clear();
+            //garrage.DrawGarrage(garrage);
+            //road.DrawRoad(road);
 
 
 

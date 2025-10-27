@@ -27,7 +27,7 @@ namespace CarGarage
         {
             int[,] draw = new int[road.SizeX, road.SizeY];
 
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, 10);
 
             for (int x = 0; x < road.SizeX; x++)
             {

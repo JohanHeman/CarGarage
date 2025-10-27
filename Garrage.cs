@@ -27,9 +27,12 @@ namespace CarGarage
         public void CheckIn(Vehicle vehicle, Garrage gar)
         {
 
-            Console.WriteLine("What collor is the vehicle? " + vehicle.GetType());
+            int inputLine = 15;
+            
+
+            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:");
             vehicle.Collor = Console.ReadLine();
-            Console.Clear();
+            
             if (vehicle is Car)
             {
                 Console.WriteLine("Is the car an electric car? \n" +
@@ -46,19 +49,21 @@ namespace CarGarage
                         ((Car)vehicle).IsElectric = false;
                         break;
                     default:
-                        Console.WriteLine("Wrong input please enter a valid answer");
+                        Console.Write("Wrong input please enter a valid answer");
                         break;
                 }
+                
                 PlaceVehicle(((Car) vehicle), gar);
             
             }
             else if (vehicle is Motorcycle)
             {
-                Console.WriteLine("What brand is the motorcycle? ");
+                Console.Write("What brand is the motorcycle? ");
                 ((Motorcycle)vehicle).Brand = Console.ReadLine();
             }
             else if (vehicle is Bus)
             {
+
                 Console.WriteLine("How many seats is it on the bus? ");
                 bool Succes = int.TryParse(Console.ReadLine(), out int seats);
 
@@ -70,7 +75,7 @@ namespace CarGarage
                 {
                     Console.WriteLine("Please enter a number of passangers: ");
                 }
-
+               
                 PlaceVehicle(((Bus)vehicle), gar);
 
             }
@@ -145,17 +150,35 @@ namespace CarGarage
 
         public void Parkbus(Bus bus, Garrage gar)
         {
+
+            if (gar.ParkedVehicles.ContainsValue(bus)) return;
+
             double SpotsNeeded = bus.Size();
             int total = gar.SizeY * gar.SizeX;
 
+            bool parked = false;
+
             for (int i = 0; i < total - 1; i++)
             {
-                if (!gar.ParkedVehicles.ContainsKey(i) && !gar.ParkedVehicles.ContainsKey(i +1))
+
+                if (!gar.ParkedVehicles.ContainsKey(i) && !gar.ParkedVehicles.ContainsKey(i + 1))
                 {
+                    if(i == gar.SizeY - 1) {
+                        continue;
+                    }
+                    else
+                    {
                         gar.ParkedVehicles.Add((i), bus);
                         gar.ParkedVehicles.Add((i + 1), bus);
+                        parked = true;
                         return;
+                    }
+
                 }
+            }
+            if (!parked)
+            {
+                Console.WriteLine("No spots left for the bus! ");
             }
         }
     }
