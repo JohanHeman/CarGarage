@@ -15,21 +15,24 @@ namespace CarGarage
         public int SizeY { get; set; }
         public Dictionary<double, Vehicle> ParkedVehicles { get; set; }
         public SortedList<double, double> EmptySpots { get; set; }
+        public double SpotsAvalible { get; set; }
 
+        
 
         public Garrage(int sizeX, int sizeY)
         {
             SizeX = sizeX;
             SizeY = sizeY;
             ParkedVehicles = new Dictionary<double, Vehicle>();
+
+            SpotsAvalible = sizeY * sizeX;
         }
 
         public void CheckIn(Vehicle vehicle, Garrage gar)
         {
-
             int inputLine = 15;
-            
 
+            Console.WriteLine("Spots avalible: " + gar.SpotsAvalible);
             Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:");
             vehicle.Collor = Console.ReadLine();
             
@@ -54,6 +57,8 @@ namespace CarGarage
                 }
                 
                 PlaceVehicle(((Car) vehicle), gar);
+                gar.SpotsAvalible -= vehicle.Size();
+                
             
             }
             else if (vehicle is Motorcycle)
@@ -77,8 +82,10 @@ namespace CarGarage
                 }
                
                 PlaceVehicle(((Bus)vehicle), gar);
-
+                gar.SpotsAvalible -= vehicle.Size();
+                
             }
+            
         }
 
         public void PrintList(Garrage gar)

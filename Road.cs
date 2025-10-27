@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,23 +32,40 @@ namespace CarGarage
 
             for (int x = 0; x < road.SizeX; x++)
             {
+
                 for (int y = 0; y < road.SizeY; y++)
                 {
-                    if(x % 2 == 0)
+
+                    bool vehiclePos = false;
+
+
+                    foreach(var vehicle in road.RoadVehicles)
                     {
-                        Console.Write("---");
-                    } else
-                    {
-                        Console.Write("-  ");
+                        if(vehicle.PosX == x && vehicle.PosY == y)
+                        {
+                            Console.Write(vehicle.Name.PadRight(3));
+                            vehiclePos = true;
+                            break;
+                        }
                     }
 
+                    if (!vehiclePos) { 
+
+                        if (x % 2 == 0)
+                        {
+                            Console.Write("---");
+
+                        }
+                        else
+                        {
+                            Console.Write("-  ");
+                        }
+                    }
                 }
+              
                 Console.WriteLine();
             }
-
         }
-
-
    
     }
 }

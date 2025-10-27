@@ -13,41 +13,32 @@ namespace CarGarage
         
 
 
-        public static Vehicle RandomVehicle()
+        public static void GenerateRandomVehicle(Road road)
         {
 
             Random rnd = new Random();
-            Vehicle unknown = new(null, null);
-
-
+            Vehicle vehicle = new Vehicle("unknopwn", "unknown");
            
             int num = rnd.Next(1, 3);
-
 
             switch (num)
             {
                 case 1:
-                    return new Car("unknown", "unknown", false);
+                    vehicle = new Car("unknown", "unknown", false);
                     break;
                 case 2:
-                    return new Bus("unknown", "unknown", 0);
+                    vehicle = new Bus("unknown", "unknown", 0);
                     break;
-                //case 3:
-                //    return new Motorcycle("unknown", "unknown", "unknown");
-                //    break;
+                case 3:
+                    vehicle = new Motorcycle("unknown", "unknown", "unknown");
+                    break;
                 default:
-                    return new Vehicle("unknown", "unknown");
-                
-            
+                    vehicle = new Vehicle("unknown", "unknown");
+                    break;
             }
-        }
-
-        public static void GenereateVehicles(Road road)
-        {
-            for(int i = 0; i < 15; i++)
-            {
-                road.RoadVehicles.Enqueue(RandomVehicle());
-            }
+            vehicle.PosX = 1;
+            vehicle.PosY = 9;
+            road.RoadVehicles.Enqueue(vehicle);
         }
 
     }
