@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CarGarage
 {
-    internal class Buss : Vehicle
+    internal class Bus : Vehicle
     {
 
         public int Passangers { get; set; }
-        public string Name { get; set; } = "B";
+        
 
-        public Buss(string plate, string collor, int passangers) : base(plate, collor)
+        public Bus(string plate, string collor, int passangers) : base(plate, collor)
         {
 
             Passangers = passangers;

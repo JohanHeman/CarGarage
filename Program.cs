@@ -12,12 +12,22 @@ namespace CarGarage
 
             CreateVehicle.GenereateVehicles(road);
 
-            
+            Vehicle veh = road.RoadVehicles.Dequeue();
+            garrage.CheckIn(veh, garrage);
+            veh = road.RoadVehicles.Dequeue();
+            garrage.CheckIn(veh, garrage);
+
+
+            garrage.PlaceVehicle(veh, garrage);
 
             garrage.DrawGarrage(garrage);
             road.DrawRoad(road);
 
-            // placera vehicles
+
+            // Prio är att fixa buss
+
+            
+
         }
     }
 }

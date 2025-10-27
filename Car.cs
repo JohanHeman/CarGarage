@@ -10,7 +10,6 @@ namespace CarGarage
     {
 
         public bool IsElectric { get; set; }
-
         
 
         public Car(string plate, string collor, bool isElectric) : base(plate, collor)
@@ -19,7 +18,6 @@ namespace CarGarage
             Name = "C";
         }
 
-
         public override double Size()
         {
             return 1;
@@ -27,8 +25,6 @@ namespace CarGarage
         }
 
     }
-
-
 
 
 }
