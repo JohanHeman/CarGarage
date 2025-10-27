@@ -91,7 +91,7 @@ namespace CarGarage
             {
                 for (int y = 0; y < garrage.SizeY; y++)
                 {
-                    int spotNumber = x * garrage.SizeY + y + 1;
+                    int spotNumber = x * garrage.SizeY + y;
 
                     if (!garrage.ParkedVehicles.ContainsKey(spotNumber))
                     {

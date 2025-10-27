@@ -24,7 +24,6 @@ namespace CarGarage
         public virtual double Size()
         {
             return 0;
-
         }
 
 

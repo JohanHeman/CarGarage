@@ -17,16 +17,23 @@ namespace CarGarage
             veh = road.RoadVehicles.Dequeue();
             garrage.CheckIn(veh, garrage);
 
-
-            garrage.PlaceVehicle(veh, garrage);
+            
 
             garrage.DrawGarrage(garrage);
             road.DrawRoad(road);
 
+            Console.WriteLine("Bus parked at:");
+            foreach (var kvp in garrage.ParkedVehicles)
+            {
+                if (kvp.Value is Bus)
+                    Console.WriteLine($" -> Spot {kvp.Key}");
+            }
+
+
 
             // Prio är att fixa buss
 
-            
+
 
         }
     }
