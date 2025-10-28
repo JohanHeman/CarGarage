@@ -30,7 +30,7 @@ namespace CarGarage
             return 0;
         }
 
-        public void DriveAway(Road road)
+        public void DriveAway(Road road, Garage garage)
         {
             //lägg till vehicle i road 
             // ta bort vehicle från garrage
@@ -38,11 +38,9 @@ namespace CarGarage
 
             while(road.RoadVehicles.Count > 0)
             {
-
-
                 var vehicle = road.RoadVehicles.Peek();
 
-                while(vehicle.PosY >= 0)
+                while(vehicle.PosY < road.SizeY - 1)
                 {
                     vehicle.PosY++;
                     Console.SetCursorPosition(0, 10);
@@ -52,7 +50,7 @@ namespace CarGarage
                     if(vehicle.PosY >= road.SizeY - 1)
                     {
                         road.RoadVehicles.Dequeue();
-                        Console.Clear();
+                        
                         break;
                     }
                 }
@@ -62,7 +60,7 @@ namespace CarGarage
 
         public static void DriveIn(Road road, Vehicle veh, Garage gar)
         {
-          
+            
             while(veh.PosY > 0)
             {
                 veh.PosY--;

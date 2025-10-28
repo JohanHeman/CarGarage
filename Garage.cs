@@ -120,7 +120,7 @@ namespace CarGarage
 
                 road.RoadVehicles.Dequeue();
                 road.RoadVehicles.Enqueue(kvp.Value);
-                kvp.Value.DriveAway(road);
+                kvp.Value.DriveAway(road, garage);
             }
             else
             {
