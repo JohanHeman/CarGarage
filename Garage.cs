@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace CarGarage
 {
-    internal class Garrage
+    internal class Garage
     {
 
         public int SizeX { get; set; }
@@ -19,7 +19,7 @@ namespace CarGarage
 
         
 
-        public Garrage(int sizeX, int sizeY)
+        public Garage(int sizeX, int sizeY)
         {
             SizeX = sizeX;
             SizeY = sizeY;
@@ -28,14 +28,16 @@ namespace CarGarage
             SpotsAvalible = sizeY * sizeX;
         }
 
-        public void CheckIn(Vehicle vehicle, Garrage gar)
+        public void CheckIn(Vehicle vehicle, Garage gar)
         {
             int inputLine = 15;
 
             Console.WriteLine("Spots avalible: " + gar.SpotsAvalible);
-            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:");
+            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:")
             vehicle.Collor = Console.ReadLine();
-            
+            Console.WriteLine("What plate is on the " + vehicle.GetType().Name + " ?:");
+            vehicle.Plate = Console.ReadLine();
+
             if (vehicle is Car)
             {
                 Console.WriteLine("Is the car an electric car? \n" +
@@ -88,7 +90,46 @@ namespace CarGarage
             
         }
 
-        public void PrintList(Garrage gar)
+
+        public void CheckOut(Vehicle vehicle, Road road, Garage garage)
+        {
+
+            Console.WriteLine("What is the plate of the vehicle you want to checkout?: ");
+            string checkPlate = Console.ReadLine();
+
+            Vehicle foundVehicle = null;
+            double foundKey = -1;
+
+            foreach(var v in garage.ParkedVehicles)
+            {
+                if(v.Value.Plate == checkPlate)
+                {
+                    foundVehicle = v.Value;
+                    foundKey = v.Key;
+                    break;
+                }
+            }
+
+            if(foundVehicle != null)
+            {
+                //Vehicle foundVehicle = kvp.Value;
+                Console.WriteLine("The vehicle is driving away.. ");
+
+
+                garage.ParkedVehicles.Remove(foundKey);
+                garage.SpotsAvalible += foundVehicle.Size();
+
+                road.RoadVehicles.Enqueue(foundVehicle);
+                foundVehicle.DriveAway(road);
+            }
+            else
+            {
+                Console.WriteLine("No vehicle with that plate was found in the garage.");
+            }
+
+        }
+
+        public void PrintList(Garage gar)
         {
             foreach(var kvp in gar.ParkedVehicles)
             {
@@ -96,7 +137,7 @@ namespace CarGarage
             }
         }
 
-        public void DrawGarrage(Garrage garrage)
+        public void DrawGarrage(Garage garrage)
         {
 
             for (int x = 0; x < garrage.SizeX; x++)
@@ -118,7 +159,7 @@ namespace CarGarage
             }
         }
 
-        public void PlaceVehicle(Vehicle vehicle, Garrage garrage)
+        public void PlaceVehicle(Vehicle vehicle, Garage garrage)
         {
             if (vehicle is Car)
             {
@@ -140,7 +181,7 @@ namespace CarGarage
         // park car at first empty spot found 
 
 
-        public void ParkCar(Car car, Garrage garrage)
+        public void ParkCar(Car car, Garage garrage)
         {
 
             int total = garrage.SizeY * garrage.SizeX;
@@ -155,7 +196,7 @@ namespace CarGarage
             }
         }
 
-        public void Parkbus(Bus bus, Garrage gar)
+        public void Parkbus(Bus bus, Garage gar)
         {
 
             if (gar.ParkedVehicles.ContainsValue(bus)) return;

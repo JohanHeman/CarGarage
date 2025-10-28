@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarGarage
 {
-    internal class Road : Garrage
+    internal class Road : Garage
     {
 
         public Queue<Vehicle> RoadVehicles { get; set; }

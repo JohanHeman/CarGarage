@@ -9,9 +9,9 @@ namespace CarGarage
         {
 
             Road road = new Road(3, 10);
-            Garrage garrage = new Garrage(3, 5);
+            Garage garage = new Garage(3, 5);
 
-            double spotsAvalible = garrage.SizeX * garrage.SizeY;
+            double spotsAvalible = garage.SizeX * garage.SizeY;
 
             while(spotsAvalible > 0)
             {
@@ -20,13 +20,13 @@ namespace CarGarage
                 CreateVehicle.GenerateRandomVehicle(road);
                 Vehicle veh = road.RoadVehicles.Peek();
 
-                garrage.DrawGarrage(garrage);
+                garage.DrawGarrage(garage);
                 road.DrawRoad(road);
 
                 
                 
                 //garrage.CheckIn(veh, garrage);
-                Vehicle.DriveIn(road, veh, garrage);
+                Vehicle.DriveIn(road, veh, garage);
 
                 
                 Console.WriteLine("The vehicle is driving in the garrage");
@@ -35,10 +35,16 @@ namespace CarGarage
 
 
 
- 
+
+            // att prioriter!! 
+            // kolla checkput metoden
+            // move vehicle ska funka åt båda hållen
+            // driveaway()
+            // motorcykel ska in 
             // får det inte plats så får det åka iväg 
             // sen kommer ett nytt och kollar 
-            // fixa utskrift av road 
+            // check out funktionen ska kalla på diveaway 
+            // kolla igenom Uppgiften pdf och skriv vad som saknas 
 
 
         }

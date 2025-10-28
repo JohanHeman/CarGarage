@@ -30,8 +30,11 @@ namespace CarGarage
             return 0;
         }
 
-        public static void DriveAway(Road road)
+        public void DriveAway(Road road)
         {
+
+
+
             foreach(var vehicle in road.RoadVehicles)
             {
                 if(vehicle.PosY >= 0 && vehicle.PosY < road.SizeY - 1)
@@ -42,7 +45,7 @@ namespace CarGarage
             }
         }
 
-        public static void DriveIn(Road road, Vehicle veh, Garrage gar)
+        public static void DriveIn(Road road, Vehicle veh, Garage gar)
         {
           
             while(veh.PosY > 0)
