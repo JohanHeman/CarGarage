@@ -32,17 +32,32 @@ namespace CarGarage
 
         public void DriveAway(Road road)
         {
+            //lägg till vehicle i road 
+            // ta bort vehicle från garrage
 
 
-
-            foreach(var vehicle in road.RoadVehicles)
+            while(road.RoadVehicles.Count > 0)
             {
-                if(vehicle.PosY >= 0 && vehicle.PosY < road.SizeY - 1)
+
+
+                var vehicle = road.RoadVehicles.Peek();
+
+                while(vehicle.PosY >= 0)
                 {
                     vehicle.PosY++;
+                    Console.SetCursorPosition(0, 10);
+                    road.DrawRoad(road);
+                    Thread.Sleep(100);
+
+                    if(vehicle.PosY >= road.SizeY - 1)
+                    {
+                        road.RoadVehicles.Dequeue();
+                        Console.Clear();
+                        break;
+                    }
                 }
-                
             }
+
         }
 
         public static void DriveIn(Road road, Vehicle veh, Garage gar)
@@ -53,7 +68,7 @@ namespace CarGarage
                 veh.PosY--;
                 Console.SetCursorPosition(0, 10);
                 road.DrawRoad(road);
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             
 
             if(veh.PosY == 0)

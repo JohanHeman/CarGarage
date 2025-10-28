@@ -33,7 +33,7 @@ namespace CarGarage
             int inputLine = 15;
 
             Console.WriteLine("Spots avalible: " + gar.SpotsAvalible);
-            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:")
+            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:");
             vehicle.Collor = Console.ReadLine();
             Console.WriteLine("What plate is on the " + vehicle.GetType().Name + " ?:");
             vehicle.Plate = Console.ReadLine();
@@ -95,38 +95,37 @@ namespace CarGarage
         {
 
             Console.WriteLine("What is the plate of the vehicle you want to checkout?: ");
-            string checkPlate = Console.ReadLine();
-
-            Vehicle foundVehicle = null;
-            double foundKey = -1;
-
+            Console.WriteLine("Parked vehicles :");
             foreach(var v in garage.ParkedVehicles)
             {
-                if(v.Value.Plate == checkPlate)
-                {
-                    foundVehicle = v.Value;
-                    foundKey = v.Key;
-                    break;
-                }
+                int i = 1;
+                Console.WriteLine(i + ": " + "vehicle: " + v.Value.Name + "with plate: " + v.Value.Plate);
+                i++;
             }
 
-            if(foundVehicle != null)
+            string checkPlate = Console.ReadLine();
+
+            var kvp = garage.ParkedVehicles.FirstOrDefault(v => v.Value.Plate == checkPlate);
+
+            if(kvp.Value != null)
             {
                 //Vehicle foundVehicle = kvp.Value;
                 Console.WriteLine("The vehicle is driving away.. ");
 
 
-                garage.ParkedVehicles.Remove(foundKey);
-                garage.SpotsAvalible += foundVehicle.Size();
+                garage.ParkedVehicles.Remove(kvp.Key);
+                garage.ParkedVehicles.Remove(kvp.Key + 1);
 
-                road.RoadVehicles.Enqueue(foundVehicle);
-                foundVehicle.DriveAway(road);
+                garage.SpotsAvalible += kvp.Value.Size();
+
+                road.RoadVehicles.Dequeue();
+                road.RoadVehicles.Enqueue(kvp.Value);
+                kvp.Value.DriveAway(road);
             }
             else
             {
                 Console.WriteLine("No vehicle with that plate was found in the garage.");
             }
-
         }
 
         public void PrintList(Garage gar)
@@ -151,7 +150,7 @@ namespace CarGarage
                         Console.Write(". \t");
                     } else
                     {
-                        Console.Write(garrage.ParkedVehicles[spotNumber].Name + "\t");
+                        Console.Write(garrage.ParkedVehicles[spotNumber].Name +  " " + garrage.ParkedVehicles[spotNumber].Plate + "\t");
                     }
                     
                 }

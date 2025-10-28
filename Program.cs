@@ -15,10 +15,29 @@ namespace CarGarage
 
             while(spotsAvalible > 0)
             {
+
                 Console.Clear();
                 
                 CreateVehicle.GenerateRandomVehicle(road);
                 Vehicle veh = road.RoadVehicles.Peek();
+
+
+                Console.Write("Do you want to acces the menu? y/n :");
+                ConsoleKeyInfo answer = Console.ReadKey();
+
+                switch (answer.KeyChar)
+                {
+                    case 'y':
+                        Menu(garage, veh, road);
+                        break;
+                    case 'n':
+                        Console.Clear();
+                        break;
+                    default:
+                        Console.WriteLine("Not a valid option please try again ");
+                        break;
+
+                }
 
                 garage.DrawGarrage(garage);
                 road.DrawRoad(road);
@@ -37,7 +56,7 @@ namespace CarGarage
 
 
             // att prioriter!! 
-            // kolla checkput metoden
+            // efter en checkout syns inte nästa fordon på vägen 
             // move vehicle ska funka åt båda hållen
             // driveaway()
             // motorcykel ska in 
@@ -47,6 +66,33 @@ namespace CarGarage
             // kolla igenom Uppgiften pdf och skriv vad som saknas 
 
 
+        }
+
+
+
+        public static void Menu(Garage garage, Vehicle vehicle, Road road)
+        {
+            Console.WriteLine("----Menu----");
+            Console.WriteLine("Option 1: Checkout and pay: ");
+            Console.WriteLine("Option 2: Show list of vehicles: ");
+
+            ConsoleKeyInfo answer = Console.ReadKey();
+
+            switch (answer.KeyChar)
+            {
+                case '1':
+                    Console.Clear();
+                    Console.WriteLine("Checkin out your vehicle....");
+                    Thread.Sleep(1000);
+                    // print money 
+                    garage.CheckOut(vehicle, road, garage);
+                    break;
+                case '2':
+                    Console.Clear();
+                    //show list
+                    break;
+                    
+            }
         }
     }
 }
