@@ -59,7 +59,6 @@ namespace CarGarage
                 }
                 
                 PlaceVehicle(((Car) vehicle), gar);
-                gar.SpotsAvalible -= vehicle.Size();
             
             }
             else if (vehicle is Motorcycle)
@@ -84,7 +83,6 @@ namespace CarGarage
                 }
                
                 PlaceVehicle(((Bus)vehicle), gar);
-                gar.SpotsAvalible -= vehicle.Size();
                 
             }
             
@@ -98,9 +96,20 @@ namespace CarGarage
             Console.WriteLine("Parked vehicles :");
             foreach(var v in garage.ParkedVehicles)
             {
-                int i = 1;
-                Console.WriteLine(i + ": " + "vehicle: " + v.Value.Name + "with plate: " + v.Value.Plate);
-                i++;
+
+                if(v.Value.Name == "C")
+                {
+                    Console.WriteLine("The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                } 
+                else if(v.Value.Name == "B")
+                {
+                    Console.WriteLine("The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key);
+                }
+                else
+                {
+                    Console.WriteLine("The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                }
+                
             }
 
             string checkPlate = Console.ReadLine();
@@ -192,16 +201,17 @@ namespace CarGarage
         // park car at first empty spot found 
 
 
-        public void ParkCar(Car car, Garage garrage)
+        public void ParkCar(Car car, Garage gar)
         {
 
-            int total = garrage.SizeY * garrage.SizeX;
+            int total = gar.SizeY * gar.SizeX;
 
             for (int spot = 0; spot <= total; spot++)
             {
-                if (!garrage.ParkedVehicles.ContainsKey(spot))
+                if (!gar.ParkedVehicles.ContainsKey(spot))
                 {
-                    garrage.ParkedVehicles.Add(spot, car);
+                    gar.ParkedVehicles.Add(spot, car);
+                    gar.SpotsAvalible -= car.Size();
                     return; // stop once parked
                 }
             }
@@ -212,7 +222,6 @@ namespace CarGarage
 
             if (gar.ParkedVehicles.ContainsValue(bus)) return;
 
-            double SpotsNeeded = bus.Size();
             int total = gar.SizeY * gar.SizeX;
 
             bool parked = false;
@@ -229,6 +238,7 @@ namespace CarGarage
                     {
                         gar.ParkedVehicles.Add((i), bus);
                         gar.ParkedVehicles.Add((i + 1), bus);
+                        gar.SpotsAvalible -= bus.Size();
                         parked = true;
                         return;
                     }
@@ -245,32 +255,32 @@ namespace CarGarage
         public void ParkMotorcycle(Motorcycle motorcycle, Garage gar)
         {
             int total = gar.SizeY * gar.SizeX;
-            
+
             for (int i = 0; i < total; i++)
             {
-                int numOfMcs = 0;
+                double firstHalf = i;
+                double secondHalf = i + 0.5;
 
-                // 2 if checks to see if mc is parked at botth sides of one spot 
-                if (gar.ParkedVehicles.ContainsKey(i) && gar.ParkedVehicles[i] is Motorcycle)
+                if (!gar.ParkedVehicles.ContainsKey(firstHalf))
                 {
-                        numOfMcs++;
-                }
-                if(gar.ParkedVehicles.ContainsKey(i + 0.5) && gar.ParkedVehicles[i + 0.5] is Motorcycle)
-                {
-                    numOfMcs++;
+                    gar.ParkedVehicles.Add(firstHalf, motorcycle);
+                    gar.SpotsAvalible -= motorcycle.Size();
+                    return;
+
                 }
 
-                if(numOfMcs == 0)
+                if (gar.ParkedVehicles[firstHalf] is Motorcycle)
                 {
-                    gar.ParkedVehicles.Add(i, motorcycle);
-                    return;
+                    if (!gar.ParkedVehicles.ContainsKey(secondHalf))
+                    {
+                        gar.ParkedVehicles.Add(secondHalf, motorcycle);
+                        gar.SpotsAvalible -= motorcycle.Size();
+                        return;
+                    }
                 }
-                else if(numOfMcs == 1)
-                {
-                    gar.ParkedVehicles.Add(i + 0.5, motorcycle)
-                    return;
-                }
+
             }
+
             Console.WriteLine("No spots left for the mc!");
 
         }
