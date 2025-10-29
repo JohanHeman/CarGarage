@@ -17,6 +17,12 @@ namespace CarGarage
         public int PosX { get; set; }
         public int PosY { get; set; }
 
+        public double parkingBill { get; set; } = 0;
+
+        public double parkingMinutes { get; set; } = 0;
+
+        
+
         public Vehicle(string plate, string collor)
         {
             Plate = plate;
@@ -32,9 +38,6 @@ namespace CarGarage
 
         public void DriveAway(Road road, Garage garage)
         {
-            //lägg till vehicle i road 
-            // ta bort vehicle från garrage
-
 
             while(road.RoadVehicles.Count > 0)
             {

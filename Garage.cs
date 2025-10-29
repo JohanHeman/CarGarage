@@ -18,6 +18,8 @@ namespace CarGarage
         public SortedList<double, double> EmptySpots { get; set; }
         public double SpotsAvalible { get; set; }
 
+        public double costPerMinute = 1.5;
+
 
         public Garage(int sizeX, int sizeY)
         {
@@ -89,43 +91,101 @@ namespace CarGarage
         }
 
 
+        public void ShowList(Garage garage)
+        {
+            Console.WriteLine("\nParked vehicles :");
+            int i = 0;
+            bool skipNext = false;
+            foreach (var v in garage.ParkedVehicles)
+            {
+
+                if (skipNext)
+                {
+                    skipNext = false;
+                    continue;
+                }
+
+                i++;
+                if (v.Value.Name == "C")
+                {
+                    Console.WriteLine(i + " :The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                }
+                else if (v.Value.Name == "B")
+                {
+                    Console.WriteLine(i + " :The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key + " and " + (v.Key + 1));
+                    skipNext = true;
+                }
+                else
+                {
+                    Console.WriteLine(i + " :The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                }
+
+            }
+        }
+
         public void CheckOut(Vehicle vehicle, Road road, Garage garage)
         {
 
             Console.WriteLine("What is the plate of the vehicle you want to checkout?: ");
             Console.WriteLine("Parked vehicles :");
+            int i = 0;
+            bool skipNext = false;
+
             foreach(var v in garage.ParkedVehicles)
             {
 
+                if (skipNext)
+                {
+                    skipNext = false;
+                    continue;
+                }
+
+                i++;
                 if(v.Value.Name == "C")
                 {
-                    Console.WriteLine("The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                    Console.WriteLine(i + " :The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
                 } 
                 else if(v.Value.Name == "B")
                 {
-                    Console.WriteLine("The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key);
+                    Console.WriteLine(i + " :The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key + " and " + (v.Key + 1));
+                    skipNext = true;
                 }
                 else
                 {
-                    Console.WriteLine("The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
+                    Console.WriteLine(i + " :The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
                 }
                 
             }
 
             string checkPlate = Console.ReadLine();
 
+            
+
             var kvp = garage.ParkedVehicles.FirstOrDefault(v => v.Value.Plate == checkPlate);
 
-            if(kvp.Value != null)
+            kvp.Value.parkingBill = kvp.Value.parkingMinutes * garage.costPerMinute;
+            Console.WriteLine("Thank you for parking! that will be: " + kvp.Value.parkingBill + "Kr");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("$Paying....");
+            Thread.Sleep(3000);
+            if (kvp.Value != null)
             {
                 //Vehicle foundVehicle = kvp.Value;
                 Console.WriteLine("The vehicle is driving away.. ");
 
+                if(kvp.Value is Bus)
+                {
 
-                garage.ParkedVehicles.Remove(kvp.Key);
-                garage.ParkedVehicles.Remove(kvp.Key + 1);
+                    garage.ParkedVehicles.Remove(kvp.Key);
+                    garage.ParkedVehicles.Remove(kvp.Key + 1);
+                }
+                else 
+                {
+                    garage.ParkedVehicles.Remove(kvp.Key);
+                }
 
-                garage.SpotsAvalible += kvp.Value.Size();
+                    garage.SpotsAvalible += kvp.Value.Size();
 
                 road.RoadVehicles.Dequeue();
                 road.RoadVehicles.Enqueue(kvp.Value);
@@ -135,14 +195,7 @@ namespace CarGarage
             {
                 Console.WriteLine("No vehicle with that plate was found in the garage.");
             }
-        }
 
-        public void PrintList(Garage gar)
-        {
-            foreach(var kvp in gar.ParkedVehicles)
-            {
-                Console.WriteLine("spot "+ kvp.Key + kvp.Value.GetType().Name);
-            }
         }
 
         public void DrawGarrage(Garage garrage)
