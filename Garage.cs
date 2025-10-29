@@ -14,10 +14,10 @@ namespace CarGarage
         public int SizeX { get; set; }
         public int SizeY { get; set; }
         public Dictionary<double, Vehicle> ParkedVehicles { get; set; }
+
         public SortedList<double, double> EmptySpots { get; set; }
         public double SpotsAvalible { get; set; }
 
-        
 
         public Garage(int sizeX, int sizeY)
         {
@@ -60,13 +60,13 @@ namespace CarGarage
                 
                 PlaceVehicle(((Car) vehicle), gar);
                 gar.SpotsAvalible -= vehicle.Size();
-                
             
             }
             else if (vehicle is Motorcycle)
             {
                 Console.Write("What brand is the motorcycle? ");
                 ((Motorcycle)vehicle).Brand = Console.ReadLine();
+                PlaceVehicle(((Motorcycle)vehicle), gar);
             }
             else if (vehicle is Bus)
             {
@@ -138,37 +138,49 @@ namespace CarGarage
 
         public void DrawGarrage(Garage garrage)
         {
-
             for (int x = 0; x < garrage.SizeX; x++)
             {
                 for (int y = 0; y < garrage.SizeY; y++)
                 {
                     int spotNumber = x * garrage.SizeY + y;
+                    double halfSpot = spotNumber + 0.5;
 
-                    if (!garrage.ParkedVehicles.ContainsKey(spotNumber))
+                    if (garrage.ParkedVehicles.ContainsKey(spotNumber) && garrage.ParkedVehicles.ContainsKey(halfSpot))
+                    {
+                        var mc1 = garrage.ParkedVehicles[spotNumber];
+                        var mc2 = garrage.ParkedVehicles[halfSpot];
+                        Console.Write(mc1.Name + ": " + mc1.Plate + " | " + mc2.Name + ": " + mc2.Plate);
+
+                    }
+                    else if(garrage.ParkedVehicles.ContainsKey(spotNumber))
+                    {
+                        Console.Write(garrage.ParkedVehicles[spotNumber].Name + " " + garrage.ParkedVehicles[spotNumber].Plate + "\t");
+                    }
+                    else
                     {
                         Console.Write(". \t");
-                    } else
-                    {
-                        Console.Write(garrage.ParkedVehicles[spotNumber].Name +  " " + garrage.ParkedVehicles[spotNumber].Plate + "\t");
                     }
-                    
+
                 }
                 Console.WriteLine();
             }
         }
 
-        public void PlaceVehicle(Vehicle vehicle, Garage garrage)
+        public void PlaceVehicle(Vehicle vehicle, Garage garage)
         {
             if (vehicle is Car)
             {
                 // check for good spot to park before parking 
-                garrage.ParkCar((Car)vehicle, garrage);
+                garage.ParkCar((Car)vehicle, garage);
             }
 
-            else if(vehicle is Bus)
+            else if (vehicle is Bus)
             {
-                garrage.Parkbus((Bus)vehicle, garrage);
+                garage.Parkbus((Bus)vehicle, garage);
+            }
+            else 
+            {
+                garage.ParkMotorcycle((Motorcycle)vehicle, garage);
             }
 
         }
@@ -228,5 +240,40 @@ namespace CarGarage
                 Console.WriteLine("No spots left for the bus! ");
             }
         }
+
+
+        public void ParkMotorcycle(Motorcycle motorcycle, Garage gar)
+        {
+            int total = gar.SizeY * gar.SizeX;
+            
+            for (int i = 0; i < total; i++)
+            {
+                int numOfMcs = 0;
+
+                // 2 if checks to see if mc is parked at botth sides of one spot 
+                if (gar.ParkedVehicles.ContainsKey(i) && gar.ParkedVehicles[i] is Motorcycle)
+                {
+                        numOfMcs++;
+                }
+                if(gar.ParkedVehicles.ContainsKey(i + 0.5) && gar.ParkedVehicles[i + 0.5] is Motorcycle)
+                {
+                    numOfMcs++;
+                }
+
+                if(numOfMcs == 0)
+                {
+                    gar.ParkedVehicles.Add(i, motorcycle);
+                    return;
+                }
+                else if(numOfMcs == 1)
+                {
+                    gar.ParkedVehicles.Add(i + 0.5, motorcycle)
+                    return;
+                }
+            }
+            Console.WriteLine("No spots left for the mc!");
+
+        }
+
     }
 }

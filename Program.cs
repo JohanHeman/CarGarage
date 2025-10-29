@@ -13,8 +13,6 @@ namespace CarGarage
 
             double spotsAvalible = garage.SizeX * garage.SizeY;
 
-            
-
             while(spotsAvalible > 0)
             {
 
@@ -46,19 +44,22 @@ namespace CarGarage
                 road.DrawRoad(road);
 
                 
-                
                 //garrage.CheckIn(veh, garrage);
 
                 Vehicle.DriveIn(road, veh, garage);
-                
 
                 Console.WriteLine("The vehicle is driving in the garrage");
                 Thread.Sleep(1000);
             }
 
             // att prioriter!! 
-            // motorcykel ska in 
-            // får det inte plats så får det åka iväg 
+            // Motorcykel skriver inte ut båda som står på samma plats
+                // dagens viktigaste fix!!! 
+            // pris ska finnas också 
+            // får det inte plats så får det åka iväg kör checkout då 
+            // 
+
+
             // kolla igenom Uppgiften pdf och skriv vad som saknas 
 
         }

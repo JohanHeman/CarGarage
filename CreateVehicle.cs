@@ -19,7 +19,7 @@ namespace CarGarage
             Random rnd = new Random();
             Vehicle vehicle = new Vehicle("unknopwn", "unknown");
            
-            int num = rnd.Next(1, 3);
+            int num = rnd.Next(3, 4);
 
             switch (num)
             {
