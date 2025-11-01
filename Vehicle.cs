@@ -38,12 +38,18 @@ namespace CarGarage
 
         public void DriveAway(Road road, Garage garage)
         {
-
+            
             while(road.RoadVehicles.Count > 0)
             {
                 var vehicle = road.RoadVehicles.Peek();
 
-                while(vehicle.PosY < road.SizeY - 1)
+                if (vehicle.PosY >= road.SizeY - 1)
+                {
+                    road.RoadVehicles.Dequeue();
+                    continue;
+                }
+
+                while (vehicle.PosY < road.SizeY - 1)
                 {
                     vehicle.PosY++;
                     Console.SetCursorPosition(0, 10);

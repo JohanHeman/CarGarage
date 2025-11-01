@@ -62,16 +62,6 @@ namespace CarGarage
                 Thread.Sleep(1000);
             }
 
-            // att prioriter!! 
-            // motorcykel körde iväg inte bussen vid checkout kanske ? 
-            // pris ska finnas också 
-            // får det inte plats så får det åka iväg kör checkout då 
-            // 
-
-
-
-            // kolla igenom Uppgiften pdf och skriv vad som saknas 
-
         }
 
         public static void Menu(Garage garage, Vehicle vehicle, Road road)

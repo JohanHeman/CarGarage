@@ -164,6 +164,8 @@ namespace CarGarage
             if (kvp.Value != null)
             {
                 //Vehicle foundVehicle = kvp.Value;
+                Console.WriteLine($"vehicle.PosY = {vehicle.PosY}, SizeY = {road.SizeY}");
+
                 Console.WriteLine("The vehicle is driving away.. ");
 
                 if(kvp.Value is Bus)
@@ -172,16 +174,18 @@ namespace CarGarage
                     garage.ParkedVehicles.Remove(kvp.Key);
                     garage.ParkedVehicles.Remove(kvp.Key + 1);
                 }
-                else 
-                {
-                    garage.ParkedVehicles.Remove(kvp.Key);
-                }
+                 
+                
+                garage.ParkedVehicles.Remove(kvp.Key);
+                
 
-                    garage.SpotsAvalible += kvp.Value.Size();
+                garage.SpotsAvalible += kvp.Value.Size();
 
-                road.RoadVehicles.Dequeue();
+                
                 road.RoadVehicles.Enqueue(kvp.Value);
+
                 kvp.Value.DriveAway(road, garage);
+                //road.RoadVehicles.Dequeue();
             }
             else
             {
