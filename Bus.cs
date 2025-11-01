@@ -25,5 +25,11 @@ namespace CarGarage
             return 2;
         }
 
+        public override string GetInfo(double spot)
+        {
+            return $"spot {spot + 1}-{spot + 2}   {Collor}   Bus   {Plate}   {Passangers}";
+        }
+
+
     }
 }

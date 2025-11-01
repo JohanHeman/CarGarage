@@ -24,6 +24,13 @@ namespace CarGarage
 
         }
 
+        public override string GetInfo(double spot)
+        {
+            string electricOrNot = IsElectric ? "Electric" : "Not electric";
+
+            return $"spot {spot + 1}   {Collor}   Car   {Plate}   {electricOrNot}";
+        }
+
     }
 
 

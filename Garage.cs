@@ -35,9 +35,9 @@ namespace CarGarage
             int inputLine = 15;
 
             Console.WriteLine("Spots avalible: " + gar.SpotsAvalible);
-            Console.WriteLine("What collor is the " + vehicle.GetType().Name + " ?:");
+            Console.Write("What collor is the " + vehicle.GetType().Name + " ?:");
             vehicle.Collor = Console.ReadLine();
-            Console.WriteLine("What plate is on the " + vehicle.GetType().Name + " ?:");
+            Console.Write("What plate is on the " + vehicle.GetType().Name + " ?:");
             vehicle.Plate = Console.ReadLine();
 
             if (vehicle is Car)
@@ -105,24 +105,16 @@ namespace CarGarage
                     continue;
                 }
 
-                i++;
-                if (v.Value.Name == "C")
+                Console.WriteLine(v.Value.GetInfo(v.Key));
+
+                if(v.Value is Bus)
                 {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
-                }
-                else if (v.Value.Name == "B")
-                {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key + " and " + (v.Key + 1));
                     skipNext = true;
-                }
-                else
-                {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
                 }
 
             }
         }
-
+         
         public void CheckOut(Vehicle vehicle, Road road, Garage garage)
         {
 
@@ -211,7 +203,7 @@ namespace CarGarage
                     {
                         var mc1 = garrage.ParkedVehicles[spotNumber];
                         var mc2 = garrage.ParkedVehicles[halfSpot];
-                        Console.Write(mc1.Name + ": " + mc1.Plate + " | " + mc2.Name + ": " + mc2.Plate);
+                        Console.Write(mc1.Name + ": " + mc1.Plate + " | " + mc2.Name + ": " + mc2.Plate + "\t");
 
                     }
                     else if(garrage.ParkedVehicles.ContainsKey(spotNumber))

@@ -26,5 +26,11 @@ namespace CarGarage
             return 0.5;
         }
 
+        public override string GetInfo(double spot)
+        {
+            return $"spot {spot + 1}   {Collor}   Motorcycle   {Plate}   {Brand}";
+        }
+
+
     }
 }

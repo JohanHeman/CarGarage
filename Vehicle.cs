@@ -83,6 +83,13 @@ namespace CarGarage
 
         }
 
+        public virtual string GetInfo(double spot)
+        {
+            return $"spot {spot + 1} {Collor} vehicle {Plate}";
+        }
+
+
+
     }
 
 
