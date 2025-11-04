@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace CarGarage
 {
-    internal class Road : Garage
+    internal class Road
     {
 
         public Queue<Vehicle> RoadVehicles { get; set; }
 
+        public int SizeX { get; set; }
+        public int SizeY { get; set; }
 
-        public Road(int sizeX, int sizeY) : base(sizeX, sizeY)
+
+        public Road(int sizeX, int sizeY)
         {
             RoadVehicles = new Queue<Vehicle>();
+            SizeX = sizeX;
+            SizeY = sizeY;
         }
 
 

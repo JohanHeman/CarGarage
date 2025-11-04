@@ -54,6 +54,7 @@ namespace CarGarage
                     "2: Not Electric");
                 var key = Console.ReadKey(true);
 
+                while(key.KeyChar != '1' && key.KeyChar != '2') { 
                 switch (key.KeyChar)
                 {
                     case '1':
@@ -64,12 +65,13 @@ namespace CarGarage
                         break;
                     default:
                         Console.Write("Wrong input please enter a valid answer");
-                        Console.WriteLine("Not a valid option press any key to go back and try again ");
-                        Console.ReadKey();
+                        Console.WriteLine("Not a valid option please enter '1' for electric and '2' for not");
+                            key = Console.ReadKey(true);
                         break;
+                    }
                 }
-
                 vehicle.Park(gar);
+                
 
             }
             else if (vehicle is Motorcycle)
@@ -84,14 +86,17 @@ namespace CarGarage
                 Console.WriteLine("How many seats is it on the bus? ");
                 bool Succes = int.TryParse(Console.ReadLine(), out int seats);
 
+                while (!Succes)
+                {
+                    Console.WriteLine("Please enter a number of passangers: ");
+                    Succes = int.TryParse(Console.ReadLine(), out seats);
+                }
+
                 if (Succes)
                 {
                     ((Bus)vehicle).Passangers = seats;
                 }
-                else
-                {
-                    Console.WriteLine("Please enter a number of passangers: ");
-                }
+   
 
                 vehicle.Park(gar);
                 
@@ -125,7 +130,7 @@ namespace CarGarage
 
             }
         }
-         
+
         public void CheckOut(Vehicle vehicle, Road road, Garage garage)
         {
 
@@ -134,7 +139,7 @@ namespace CarGarage
             int i = 0;
             bool skipNext = false;
 
-            foreach(var v in garage.ParkedVehicles)
+            foreach (var v in garage.ParkedVehicles)
             {
 
                 if (skipNext)
@@ -158,10 +163,17 @@ namespace CarGarage
 
             var kvp = garage.ParkedVehicles.FirstOrDefault(v => v.Value.Plate == checkPlate.ToUpper());
 
+            if (kvp.Value == null)
+            {
+                Console.WriteLine("No vehicle with that plate was found in the garage. Going Back to main menu now. ");
+                Console.ReadKey();
+                return;
+            }
+
             kvp.Value.parkingBill = kvp.Value.parkingMinutes * garage.costPerMinute;
+
             if (kvp.Value is Bus)
             {
-
                 Console.WriteLine("Thank you for parking! that will be: " + (kvp.Value.parkingBill / 2) + "Kr");
             }
             else
@@ -173,35 +185,28 @@ namespace CarGarage
             Console.Clear();
             Console.WriteLine("$Paying....");
             Thread.Sleep(3000);
+
             if (kvp.Value != null)
             {
 
                 Console.WriteLine("The vehicle is driving away.. ");
 
-                if(kvp.Value is Bus)
+                if (kvp.Value is Bus)
                 {
 
                     garage.ParkedVehicles.Remove(kvp.Key);
                     garage.ParkedVehicles.Remove(kvp.Key + 1);
                 }
-                 
-                
+
                 garage.ParkedVehicles.Remove(kvp.Key);
-                
 
                 garage.SpotsAvalible += kvp.Value.Size();
 
-                
                 road.RoadVehicles.Enqueue(kvp.Value);
 
                 kvp.Value.DriveAway(road, garage);
-                //road.RoadVehicles.Dequeue();
-            }
-            else
-            {
-                Console.WriteLine("No vehicle with that plate was found in the garage.");
-            }
 
+            }
         }
 
         public void DrawGarrage(Garage garrage)
@@ -210,7 +215,7 @@ namespace CarGarage
             {
                 for (int y = 0; y < garrage.SizeY; y++)
                 {
-                    int spotNumber = x * garrage.SizeY + y;
+                    int spotNumber = x * garrage.SizeY + y; // creates a unique parkingspot for each row
                     double halfSpot = spotNumber + 0.5;
 
                     if (garrage.ParkedVehicles.ContainsKey(spotNumber) && garrage.ParkedVehicles.ContainsKey(halfSpot))
@@ -234,73 +239,6 @@ namespace CarGarage
             }
         }
 
-        public void Parkbus(Bus bus, Garage gar)
-        {
-
-            if (gar.ParkedVehicles.ContainsValue(bus)) return;
-
-            int total = gar.SizeY * gar.SizeX;
-
-            bool parked = false;
-
-            for (int i = 0; i < total - 1; i++)
-            {
-
-                if (!gar.ParkedVehicles.ContainsKey(i) && !gar.ParkedVehicles.ContainsKey(i + 1))
-                {
-                    if(i == gar.SizeY - 1) {
-                        continue;
-                    }
-                    else
-                    {
-                        gar.ParkedVehicles.Add((i), bus);
-                        gar.ParkedVehicles.Add((i + 1), bus);
-                        gar.SpotsAvalible -= bus.Size();
-                        parked = true;
-                        return;
-                    }
-
-                }
-            }
-            if (!parked)
-            {
-                Console.WriteLine("No spots left for the bus! ");
-            }
-        }
-
-
-        public void ParkMotorcycle(Motorcycle motorcycle, Garage gar)
-        {
-            int total = gar.SizeY * gar.SizeX;
-
-            for (int i = 0; i < total; i++)
-            {
-                double firstHalf = i;
-                double secondHalf = i + 0.5;
-
-                if (!gar.ParkedVehicles.ContainsKey(firstHalf))
-                {
-                    gar.ParkedVehicles.Add(firstHalf, motorcycle);
-                    gar.SpotsAvalible -= motorcycle.Size();
-                    return;
-
-                }
-
-                if (gar.ParkedVehicles[firstHalf] is Motorcycle)
-                {
-                    if (!gar.ParkedVehicles.ContainsKey(secondHalf))
-                    {
-                        gar.ParkedVehicles.Add(secondHalf, motorcycle);
-                        gar.SpotsAvalible -= motorcycle.Size();
-                        return;
-                    }
-                }
-
-            }
-
-            Console.WriteLine("No spots left for the mc!");
-
-        }
 
     }
 }

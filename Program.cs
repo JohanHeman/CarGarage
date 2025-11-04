@@ -45,8 +45,6 @@ namespace CarGarage
                 road.DrawRoad(road);
                 
 
-
-
                 Vehicle.DriveIn(road, veh, garage);
 
                 foreach (var parkedV in garage.ParkedVehicles)
