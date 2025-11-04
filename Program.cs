@@ -21,10 +21,9 @@ namespace CarGarage
                 CreateVehicle.GenerateRandomVehicle(road);
                 Vehicle veh = road.RoadVehicles.Peek();
 
-
                 Console.Write("Do you want to acces the menu? y/n :");
                 ConsoleKeyInfo answer = Console.ReadKey();
-
+         
                 switch (answer.KeyChar)
                 {
                     case 'y':
@@ -35,11 +34,13 @@ namespace CarGarage
                         Console.Clear();
                         break;
                     default:
-                        Console.WriteLine("Not a valid option please try again ");
-                        break;
+                        Console.Clear();
+                        Console.WriteLine("Not a valid option press any key to go back and try again ");
+                        Console.ReadKey();
+                        continue;
 
                 }
-
+                
                 garage.DrawGarrage(garage);
                 road.DrawRoad(road);
                 

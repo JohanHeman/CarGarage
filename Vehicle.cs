@@ -31,6 +31,12 @@ namespace CarGarage
             PosY = -1;
         }
 
+
+        public virtual void Park(Garage garage)
+        {
+            Console.WriteLine("You cant park this vehicle type. ");
+        }
+
         public virtual double Size()
         {
             return 0;

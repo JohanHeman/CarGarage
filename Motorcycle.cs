@@ -32,5 +32,37 @@ namespace CarGarage
         }
 
 
+        public override void Park(Garage gar)
+        {
+            int total = gar.SizeY * gar.SizeX;
+
+            for (int i = 0; i < total; i++)
+            {
+                double firstHalf = i;
+                double secondHalf = i + 0.5;
+
+                if (!gar.ParkedVehicles.ContainsKey(firstHalf))
+                {
+                    gar.ParkedVehicles.Add(firstHalf, this);
+                    gar.SpotsAvalible -= this.Size();
+                    return;
+
+                }
+
+                if (gar.ParkedVehicles[firstHalf] is Motorcycle)
+                {
+                    if (!gar.ParkedVehicles.ContainsKey(secondHalf))
+                    {
+                        gar.ParkedVehicles.Add(secondHalf, this);
+                        gar.SpotsAvalible -= this.Size();
+                        return;
+                    }
+                }
+
+            }
+
+            Console.WriteLine("No spots left for the mc!");
+        }
+
     }
 }

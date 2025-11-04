@@ -37,8 +37,15 @@ namespace CarGarage
             Console.WriteLine("Spots avalible: " + gar.SpotsAvalible);
             Console.Write("What collor is the " + vehicle.GetType().Name + " ?:");
             vehicle.Collor = Console.ReadLine();
-            Console.Write("What plate is on the " + vehicle.GetType().Name + " ?:");
-            vehicle.Plate = Console.ReadLine();
+            Console.WriteLine("What plate is on the " + vehicle.GetType().Name + " ?:");
+            Console.WriteLine("Please enter in this format XXX XXX");
+            vehicle.Plate = Console.ReadLine().ToUpper();
+            while(vehicle.Plate.Length != 7)
+            {
+                Console.WriteLine("vehicle Plate must be 6 characters long.");
+                Console.Write("What plate is on the " + vehicle.GetType().Name + " ?:");
+                vehicle.Plate = Console.ReadLine().ToUpper();
+            }
 
             if (vehicle is Car)
             {
@@ -57,17 +64,19 @@ namespace CarGarage
                         break;
                     default:
                         Console.Write("Wrong input please enter a valid answer");
+                        Console.WriteLine("Not a valid option press any key to go back and try again ");
+                        Console.ReadKey();
                         break;
                 }
-                
-                PlaceVehicle(((Car) vehicle), gar);
-            
+
+                vehicle.Park(gar);
+
             }
             else if (vehicle is Motorcycle)
             {
                 Console.Write("What brand is the motorcycle? ");
                 ((Motorcycle)vehicle).Brand = Console.ReadLine();
-                PlaceVehicle(((Motorcycle)vehicle), gar);
+                vehicle.Park(gar);
             }
             else if (vehicle is Bus)
             {
@@ -83,8 +92,8 @@ namespace CarGarage
                 {
                     Console.WriteLine("Please enter a number of passangers: ");
                 }
-               
-                PlaceVehicle(((Bus)vehicle), gar);
+
+                vehicle.Park(gar);
                 
             }
             
@@ -93,8 +102,10 @@ namespace CarGarage
 
         public void ShowList(Garage garage)
         {
+            Console.WriteLine("Loading vehicles... ");
+            Thread.Sleep(1000);
+
             Console.WriteLine("\nParked vehicles :");
-            int i = 0;
             bool skipNext = false;
             foreach (var v in garage.ParkedVehicles)
             {
@@ -132,39 +143,38 @@ namespace CarGarage
                     continue;
                 }
 
-                i++;
-                if(v.Value.Name == "C")
+                Console.WriteLine(v.Value.GetInfo(v.Key));
+
+                if (v.Value is Bus)
                 {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + "Car " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
-                } 
-                else if(v.Value.Name == "B")
-                {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + " Buss " + "with plate: " + v.Value.Plate + " that takes two spots " + v.Key + " and " + (v.Key + 1));
                     skipNext = true;
                 }
-                else
-                {
-                    Console.WriteLine(i + " :The " + v.Value.Collor + "Motorcycle " + "with plate: " + v.Value.Plate + " on spot " + v.Key);
-                }
-                
+
+                i++;
+
             }
 
             string checkPlate = Console.ReadLine();
 
-            
-
-            var kvp = garage.ParkedVehicles.FirstOrDefault(v => v.Value.Plate == checkPlate);
+            var kvp = garage.ParkedVehicles.FirstOrDefault(v => v.Value.Plate == checkPlate.ToUpper());
 
             kvp.Value.parkingBill = kvp.Value.parkingMinutes * garage.costPerMinute;
-            Console.WriteLine("Thank you for parking! that will be: " + kvp.Value.parkingBill + "Kr");
+            if (kvp.Value is Bus)
+            {
+
+                Console.WriteLine("Thank you for parking! that will be: " + (kvp.Value.parkingBill / 2) + "Kr");
+            }
+            else
+            {
+                Console.WriteLine("Thank you for parking! that will be: " + kvp.Value.parkingBill + "Kr");
+            }
+
             Thread.Sleep(1000);
             Console.Clear();
             Console.WriteLine("$Paying....");
             Thread.Sleep(3000);
             if (kvp.Value != null)
             {
-                //Vehicle foundVehicle = kvp.Value;
-                Console.WriteLine($"vehicle.PosY = {vehicle.PosY}, SizeY = {road.SizeY}");
 
                 Console.WriteLine("The vehicle is driving away.. ");
 
@@ -221,48 +231,6 @@ namespace CarGarage
 
                 }
                 Console.WriteLine();
-            }
-        }
-
-        public void PlaceVehicle(Vehicle vehicle, Garage garage)
-        {
-            if (vehicle is Car)
-            {
-                // check for good spot to park before parking 
-                garage.ParkCar((Car)vehicle, garage);
-            }
-
-            else if (vehicle is Bus)
-            {
-                garage.Parkbus((Bus)vehicle, garage);
-            }
-            else 
-            {
-                garage.ParkMotorcycle((Motorcycle)vehicle, garage);
-            }
-
-        }
-
-        // logic for parking 
-
-        // look for two empty spots : park bus there" 
-        // look for allready parked motorcycle  or one empty spot: park motorcycle
-        // park car at first empty spot found 
-
-
-        public void ParkCar(Car car, Garage gar)
-        {
-
-            int total = gar.SizeY * gar.SizeX;
-
-            for (int spot = 0; spot <= total; spot++)
-            {
-                if (!gar.ParkedVehicles.ContainsKey(spot))
-                {
-                    gar.ParkedVehicles.Add(spot, car);
-                    gar.SpotsAvalible -= car.Size();
-                    return; // stop once parked
-                }
             }
         }
 
